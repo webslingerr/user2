@@ -6,13 +6,13 @@ import (
 )
 
 type Controller struct {
+	store storage.StorageI
 	cfg *config.Config
-	store *storage.Store
 }
 
-func NewController(cfg *config.Config, store *storage.Store) *Controller {
+func NewController(cfg *config.Config, store storage.StorageI) *Controller {
 	return &Controller{
-		cfg: cfg,
 		store: store,
+		cfg: cfg,
 	}
-} 
+}
