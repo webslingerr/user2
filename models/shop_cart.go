@@ -22,7 +22,3 @@ type Remove struct {
 	ProductId string `json:"productId"`
 	UserId    string `json:"userID"`
 }
-
-type Update struct {
-	Status bool `json:"status"`
-}

@@ -1,6 +1,9 @@
 package controller
 
-import "app/models"
+import (
+	"app/models"
+	"errors"
+)
 
 func (c *Controller) AddShopCart(req *models.Add) (string, error) {
 	_, err := c.store.User().GetByID(&models.UserPrimaryKey{Id: req.UserId})
@@ -48,7 +51,12 @@ func (c *Controller) CalculateTotal(req *models.UserPrimaryKey, status string, d
 		if status == "fixed" {
 			total += float64(v.Count) * (product.Price - discount)
 		} else if status == "percent" {
+			if discount < 0 || discount > 100 {
+				return 0, errors.New("Invalid discount range")
+			}
 			total += float64(v.Count) * (product.Price - (product.Price * discount)/100)
+		} else {
+			return 0, errors.New("Invalid status name")
 		}
 	}
 
